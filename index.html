@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spark! Sense, Think, Move</title>
+<meta name="description" content="An interactive, animated tour of electronic components: sensors, microcontrollers and actuators, with a quiz.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <div class="brand"><b>⚡</b><span>Spark!</span></div>
+  <div class="counter"><span class="grp" id="grp">Welcome</span><span class="cn" id="cnt">1 / 1</span><button class="nb" id="menuBtn" title="All slides (M)" style="width:40px;height:40px;font-size:16px">☰</button></div>
+</header>
+
+<main class="deck" id="deck">
+
+<!-- 1 TITLE -->
+<section class="slide c-p title" data-group="Welcome" data-title="Welcome" data-demo="none">
+  <svg class="traces" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+    <path class="sy" d="M0 120 H260 L320 180 H620 L680 120 H1200"/>
+    <path class="so" d="M0 260 H180 L240 320 H500 V420 H900 L960 360 H1200" style="animation-duration:3s"/>
+    <path class="sp" d="M0 560 H340 L400 500 H760 L820 560 H1200" style="animation-duration:2.4s"/>
+    <path class="sv" d="M1200 60 H980 L920 120 H760 V250 H520" style="animation-duration:3.4s"/>
+    <path class="sb" d="M0 660 H220 L280 600 H460 V520" style="animation-duration:2.8s"/>
+    <circle cx="620" cy="180" r="9" class="fy pulse"/><circle cx="500" cy="320" r="9" class="fp pulse"/><circle cx="760" cy="250" r="9" class="fb pulse"/><circle cx="400" cy="500" r="9" class="fo pulse"/>
+  </svg>
+  <div class="wrap one">
+    <div class="copy" style="align-items:center">
+      <h1 class="rv"><span>How electronics</span><em>Sense.</em> <em>Think.</em> <em>Move.</em></h1>
+      <p class="lead rv" style="--d:.15s">An interactive tour of resistors, sensors, microcontrollers and motors. Every part has a live animation you can play with. Quiz at the end.</p>
+      <div class="row rv" style="--d:.3s"><button class="btn" data-next>Start the tour →</button><a class="btn ghost" href="quiz.html">Jump to the quiz</a></div>
+      <p class="hint rv" style="--d:.4s">Use ← → keys, swipe, or the buttons below. Press M for the slide menu, F for fullscreen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 2 OVERVIEW -->
+<section class="slide c-v" data-group="The big idea" data-title="Sense · Think · Move" data-demo="none">
+  <div class="wrap one">
+    <div class="copy">
+      <span class="tag rv">The big idea</span>
+      <h2 class="rv">Every gadget does <em>3 jobs</em></h2>
+      <p class="lead rv">Your smart watch, washing machine and auto-door all follow the same pattern. Sort every component you will meet today into one of these buckets.</p>
+      <div class="arrowrow rv"><span>SENSE</span><i></i><span>THINK</span><i></i><span>ACT</span></div>
+      <div class="trio">
+        <div class="role r1 pop" style="--d:.1s"><div class="big">👀</div><h3>Sensors</h3><p>The senses. They turn the real world (light, distance, touch, wetness) into electrical signals.</p><ul><li>Button</li><li>Potentiometer</li><li>Photoresistor</li><li>Ultrasonic</li><li>Soil moisture</li><li>IR</li></ul></div>
+        <div class="role r2 pop" style="--d:.25s"><div class="big">🧠</div><h3>The Brain</h3><p>Reads the signals, runs your program, and decides what should happen next.</p><ul><li>Microcontroller</li><li>Arduino</li><li>ESP32</li><li>Pico</li><li>Raspberry Pi</li></ul></div>
+        <div class="role r3 pop" style="--d:.4s"><div class="big">💪</div><h3>Actuators</h3><p>The muscles. They turn electrical signals back into light, sound or motion.</p><ul><li>LED</li><li>DC motor</li><li>Servo motor</li></ul></div>
+      </div>
+      <div class="block rv" style="--d:.5s">🧱 <b>Building blocks</b> (resistor, capacitor, AC/DC power) are the supporting cast that keeps all three jobs safe and smooth. We start there.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 AC / DC -->
+<section class="slide c-o" data-group="Building blocks" data-title="Voltage: DC vs AC" data-demo="acdc">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧱 Building block · Power</span>
+      <h2 class="rv">Voltage: <em>DC vs AC</em></h2>
+      <p class="lead rv">Voltage is the <b>push</b> that makes electrons move. It comes in two flavours.</p>
+      <ul class="pts rv">
+        <li><b>DC (Direct Current)</b> flows one way, steady. Batteries, USB, phone chargers and every Arduino pin use DC (usually 3.3 V or 5 V).</li>
+        <li><b>AC (Alternating Current)</b> keeps reversing. The wall socket in India gives about <b>230 V at 50 Hz</b>, which means 50 full back-and-forth cycles every second.</li>
+        <li>AC travels long distances easily, but electronics need DC. That is why every charger has an <b>adapter</b> that converts AC to DC.</li>
+      </ul>
+      <div class="chips rv"><span class="chip">⚠ Never connect a wall socket to a breadboard</span></div>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <canvas id="acdcCv"></canvas>
+      <div class="ctrls"><div class="ctrl"><label>AC speed (slowed down so you can see it)</label><input type="range" id="acF" min="0.3" max="2.5" step="0.1" value="1"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 RESISTOR -->
+<section class="slide c-y" data-group="Building blocks" data-title="Resistor" data-demo="resistor">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧱 Building block</span>
+      <h2 class="rv">Resistor: <em>the traffic cop</em></h2>
+      <p class="lead rv">A resistor <b>limits how much current flows</b>. Think of a road that suddenly gets narrow: fewer cars get through.</p>
+      <ul class="pts rv">
+        <li><b>Ohm's law: V = I × R.</b> With the same voltage, more resistance means less current.</li>
+        <li>Measured in <b>ohms (Ω)</b>. The coloured bands on its body are a code for the value.</li>
+        <li>Used to protect LEDs, to build voltage dividers, and as pull-up or pull-down resistors for buttons.</li>
+      </ul>
+      <svg class="rv" viewBox="0 0 360 70" style="max-width:360px">
+        <path d="M0 35H60M300 35H360" class="wire on"/>
+        <rect x="60" y="12" width="240" height="46" rx="23" fill="#e8c28a"/>
+        <rect x="100" y="12" width="20" height="46" fill="#FB5607"/><rect x="140" y="12" width="20" height="46" fill="#FB5607"/><rect x="180" y="12" width="20" height="46" fill="#8a4b12"/><rect x="250" y="12" width="14" height="46" fill="#FFBE0B"/>
+        <text x="180" y="68" text-anchor="middle" class="lbl s">orange · orange · brown · gold = 330 Ω ±5%</text>
+      </svg>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <canvas id="resCv"></canvas>
+      <div class="ctrls"><div class="ctrl"><label>Resistance (R)</label><input type="range" id="resR" min="50" max="1000" value="200"></div></div>
+      <div class="read"><span>V = <b>5 V</b></span><span>R = <b id="rR">200 Ω</b></span><span>I = V/R = <b id="rI">25 mA</b></span><span id="rHeat">warm</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 CAPACITOR -->
+<section class="slide c-b" data-group="Building blocks" data-title="Capacitor" data-demo="capacitor">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧱 Building block</span>
+      <h2 class="rv">Capacitor: <em>tiny charge bucket</em></h2>
+      <p class="lead rv">Two metal plates with a thin insulator in between. Connect a battery and charge piles up on the plates. Remove it, and the capacitor can <b>release that charge</b> in a flash.</p>
+      <ul class="pts rv">
+        <li>Measured in <b>farads</b>. Hobby parts are µF (millionths of a farad).</li>
+        <li>Smooths bumpy power, filters noise, times things (RC circuits), and powers camera flashes.</li>
+        <li>The <b>ceiling fan</b> at home has one. It gives the motor its starting push.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="capSvg" viewBox="0 0 520 300"></svg>
+      <div class="btns"><button class="btn" id="capCharge">⚡ Charge it</button><button class="btn ghost" id="capDis">💡 Discharge into LED</button></div>
+      <div class="read"><span>Vc = <b id="capV">0.0 V</b></span><span id="capS">idle</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 POTENTIOMETER -->
+<section class="slide c-b" data-group="Sensors" data-title="Potentiometer" data-demo="pot">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Sensor · Input</span>
+      <h2 class="rv">Potentiometer: <em>the knob</em></h2>
+      <p class="lead rv">A resistor you can <b>turn</b>. It has 3 pins: one end to 5 V, the other end to GND, and a middle <b>wiper</b> that slides along the track.</p>
+      <ul class="pts rv">
+        <li>Turn the knob and the wiper splits the track into two parts, giving <b>any voltage between 0 and 5 V</b>. This is a <i>voltage divider</i>.</li>
+        <li>Volume knobs, light dimmers and joysticks all use one.</li>
+        <li>Drag the knob on the right. Watch the wiper and the bulb.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="potSvg" viewBox="0 0 520 320" style="touch-action:none"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Or use the slider</label><input type="range" id="potR" min="0" max="100" value="50"></div></div>
+      <div class="read"><span>R1 = <b id="pR1"></b></span><span>R2 = <b id="pR2"></b></span><span>Vout = <b id="pV"></b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 MICROCONTROLLER -->
+<section class="slide c-v" data-group="The Brain" data-title="Microcontroller" data-demo="mcu">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧠 The Brain</span>
+      <h2 class="rv">Microcontroller: <em>a computer on a chip</em></h2>
+      <p class="lead rv">It has a <b>CPU</b> (thinks), <b>memory</b> (remembers your program) and <b>pins</b> (talk to the outside world). It repeats the same 3 steps forever:</p>
+      <ul class="pts rv">
+        <li><b>1 · READ</b> an input pin (is the button pressed?)</li>
+        <li><b>2 · DECIDE</b> using your code (if pressed then...)</li>
+        <li><b>3 · ACT</b> by changing an output pin (turn the LED on)</li>
+      </ul>
+      <p class="lead rv">The microwave, washing machine, TV remote and AC at home all hide one inside.</p>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="mcuSvg" viewBox="0 0 640 280"></svg>
+      <pre class="code" style="margin-top:10px"><span class="k">void</span> <span class="f">loop</span>() {
+<span id="ml1">  <span class="k">int</span> s = <span class="f">digitalRead</span>(BUTTON);       <span class="c">// 1 READ</span></span>
+<span id="ml2">  <span class="k">if</span> (s == <span class="n">HIGH</span>) {                       <span class="c">// 2 DECIDE</span></span>
+<span id="ml3">    <span class="f">digitalWrite</span>(LED, <span class="n">HIGH</span>);            <span class="c">// 3 ACT</span></span>
+  } <span class="k">else</span> <span class="f">digitalWrite</span>(LED, <span class="n">LOW</span>);
+}</pre>
+      <div class="read"><span id="mState">Tap the button in the diagram</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 LED -->
+<section class="slide c-p" data-group="Actuators" data-title="LED & Diode" data-demo="led">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">💪 Actuator · Output</span>
+      <h2 class="rv">LED: <em>a one-way light</em></h2>
+      <p class="lead rv">An LED is a <b>diode</b>, a one-way valve for current, that glows when current passes through it.</p>
+      <ul class="pts rv">
+        <li><b>Anode (+)</b> is the long leg. <b>Cathode (−)</b> is the short leg, next to the flat edge. Connect them backwards and nothing flows.</li>
+        <li>An LED has almost no resistance of its own. Without a <b>series resistor</b> it draws too much current and burns out.</li>
+        <li>Try both buttons on the right.</li>
+      </ul>
+      <div class="chips rv"><span class="chip">Typical: 2 V drop, 10–20 mA</span><span class="chip">R = (Vsupply − Vled) / I</span></div>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="ledSvg" viewBox="0 0 520 300"></svg>
+      <div class="btns"><button class="btn" id="ledFlip">🔄 Flip the battery</button><button class="btn ghost" id="ledRes">⚠ Remove resistor</button></div>
+      <div class="info" id="ledInfo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 9 MOTORS -->
+<section class="slide c-o" data-group="Actuators" data-title="How motors work" data-demo="motor">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">💪 Actuator · Output</span>
+      <h2 class="rv">Motors: <em>electricity into motion</em></h2>
+      <p class="lead rv">A wire carrying current inside a magnetic field gets <b>pushed sideways</b>. Bend the wire into a loop and the two sides get pushed in opposite directions, so the loop <b>spins</b>.</p>
+      <ul class="pts rv">
+        <li>Force = field × current × length. More current means more push.</li>
+        <li>A <b>commutator</b> flips the current every half turn so the push always keeps the same spin direction.</li>
+        <li>Three kinds you will use: <b>DC motor</b> (spins freely), <b>servo</b> (goes to an exact angle), <b>stepper</b> (moves in small precise steps).</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="motSvg" viewBox="0 0 520 320"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Current (voltage)</label><input type="range" id="motI" min="0" max="100" value="45"></div></div>
+      <div class="read"><span>Speed = <b id="motRpm"></b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 PART 2 DIVIDER -->
+<section class="slide c-y" data-group="Part 2" data-title="Meet the real components" data-demo="none">
+  <div class="wrap one">
+    <div class="copy">
+      <span class="tag rv">Part 2</span>
+      <h2 class="rv">Meet the <em>real components</em></h2>
+      <p class="lead rv">Now the actual parts you can buy and plug into a breadboard, organised as Inputs, Brains and Actuators.</p>
+      <div class="trio">
+        <div class="role r1 pop" style="--d:.1s"><div class="big">👀</div><h3>Inputs</h3><ul><li>Push button</li><li>Potentiometer</li><li>Photoresistor</li><li>Ultrasonic</li><li>Soil moisture</li><li>IR sensor</li></ul></div>
+        <div class="role r2 pop" style="--d:.25s"><div class="big">🧠</div><h3>Brains</h3><ul><li>Arduino</li><li>ESP32</li><li>Pico · Pi · micro:bit · STM32 · NodeMCU</li></ul></div>
+        <div class="role r3 pop" style="--d:.4s"><div class="big">💪</div><h3>Actuators</h3><ul><li>Servo motor</li><li>DC motor</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11 BUTTON -->
+<section class="slide c-b" data-group="Inputs" data-title="Push button" data-demo="button">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 1 of 6</span>
+      <h2 class="rv">Push button: <em>the simplest sensor</em></h2>
+      <p class="lead rv">Press it and two pieces of metal touch, which <b>closes the circuit</b>. The pin sees 5 V (HIGH). Let go and it sees 0 V (LOW).</p>
+      <ul class="pts rv">
+        <li>A <b>pull-down resistor</b> (10 kΩ) ties the pin to GND when the button is open. Without it the pin <i>floats</i> and reads random noise.</li>
+        <li>Real buttons <b>bounce</b>. The contacts chatter for a few milliseconds, so code often adds a short delay (debounce).</li>
+      </ul>
+      <pre class="code rv"><span class="f">pinMode</span>(<span class="n">2</span>, INPUT);
+<span class="k">if</span> (<span class="f">digitalRead</span>(<span class="n">2</span>) == HIGH) { <span class="c">/* pressed! */</span> }</pre>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="btnSvg" viewBox="0 0 520 280" style="touch-action:none"></svg>
+      <div class="read"><span id="bState">D2 = <b>LOW</b></span><span>Presses: <b id="bCount">0</b></span></div>
+      <div class="info">Press and hold the big button in the diagram (mouse, touch or Space).</div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 POT ADC -->
+<section class="slide c-b" data-group="Inputs" data-title="Analog input (ADC)" data-demo="adc">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 2 of 6</span>
+      <h2 class="rv">Potentiometer as <em>analog input</em></h2>
+      <p class="lead rv">Buttons are on or off. A pot gives a <b>smooth range</b>. The microcontroller's <b>ADC</b> (analog-to-digital converter) turns that voltage into a number.</p>
+      <ul class="pts rv">
+        <li><b>Arduino Uno:</b> 10-bit ADC, so 0 to 1023 (each step is about 4.9 mV).</li>
+        <li><b>ESP32:</b> 12-bit ADC, so 0 to 4095.</li>
+        <li><code>map()</code> rescales the number, for example 0–1023 to a servo angle of 0–180°.</li>
+      </ul>
+      <pre class="code rv"><span class="k">int</span> v = <span class="f">analogRead</span>(A0);
+<span class="k">int</span> angle = <span class="f">map</span>(v, <span class="n">0</span>, <span class="n">1023</span>, <span class="n">0</span>, <span class="n">180</span>);</pre>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg viewBox="0 0 520 220" id="adcSvg"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Turn the knob</label><input type="range" id="adcR" min="0" max="1023" value="512"></div></div>
+      <div class="bits" id="adcBits"></div>
+      <div class="read"><span>analogRead = <b id="adcN"></b></span><span>Voltage = <b id="adcV"></b></span><span>Angle = <b id="adcA"></b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 LDR -->
+<section class="slide c-y" data-group="Inputs" data-title="Photoresistor (LDR)" data-demo="ldr">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 3 of 6</span>
+      <h2 class="rv">Photoresistor: <em>a light-sensitive resistor</em></h2>
+      <p class="lead rv">An LDR (light dependent resistor) <b>changes its resistance with light</b>. Bright light drops it to a few kΩ. Darkness raises it to hundreds of kΩ.</p>
+      <ul class="pts rv">
+        <li>Put it in a voltage divider with a fixed 10 kΩ resistor and the pin sees a <b>voltage that follows the light</b>.</li>
+        <li>The Arduino compares that number to a threshold. Below it means dark, so switch the lamp on.</li>
+        <li>This is how automatic street lights, night lamps and screen auto-brightness work.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="ldrSvg" viewBox="0 0 520 300"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Sunlight → Night</label><input type="range" id="ldrS" min="0" max="100" value="15"></div></div>
+      <div class="read"><span>LDR = <b id="ldrR"></b></span><span>analogRead = <b id="ldrA"></b></span><span id="ldrL"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 ULTRASONIC -->
+<section class="slide c-v" data-group="Inputs" data-title="Ultrasonic sensor" data-demo="ultra">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 4 of 6</span>
+      <h2 class="rv">Ultrasonic sensor: <em>a bat's sonar</em></h2>
+      <p class="lead rv">The HC-SR04 shouts a <b>40 kHz chirp</b> you cannot hear, then listens for the echo. <b>Longer echo means farther object.</b></p>
+      <ul class="pts rv">
+        <li>TRIG pin: a 10 µs pulse starts the chirp. ECHO pin: stays HIGH until the echo returns.</li>
+        <li><b>distance = time × 0.0343 cm/µs ÷ 2</b> (divide by 2 because the sound goes there and back).</li>
+        <li>Range is about 2 cm to 4 m. Used in parking sensors, water-level meters and obstacle-avoiding robots.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="ultSvg" viewBox="0 0 560 320"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Object distance</label><input type="range" id="ultD" min="5" max="200" value="80"></div></div>
+      <div class="read"><span>Distance = <b id="ultDv"></b></span><span>Echo time = <b id="ultT"></b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 SOIL -->
+<section class="slide c-o" data-group="Inputs" data-title="Soil moisture sensor" data-demo="soil">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 5 of 6</span>
+      <h2 class="rv">Soil moisture: <em>does the plant need water?</em></h2>
+      <p class="lead rv">Two prongs go into the soil. Wet soil conducts electricity and changes capacitance differently from dry soil, so the sensor outputs an <b>analog number</b>.</p>
+      <ul class="pts rv">
+        <li>Cheap <b>resistive</b> probes corrode in weeks. <b>Capacitive</b> ones last far longer.</li>
+        <li>Calibrate it: note the reading in dry air and in a glass of water, and use those as your limits.</li>
+        <li>In this demo, a <b>higher number means drier</b> (like many capacitive modules).</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="soilSvg" viewBox="0 0 520 320"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Soil moisture</label><input type="range" id="soilM" min="0" max="100" value="20"></div><div class="ctrl"><label><input type="checkbox" id="soilAuto" checked> Auto-water pump</label></div></div>
+      <div class="read"><span>Moisture = <b id="soilP"></b></span><span>analogRead = <b id="soilA"></b></span><span id="soilS"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 IR -->
+<section class="slide c-p" data-group="Inputs" data-title="IR sensor" data-demo="ir">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">👀 Input 6 of 6</span>
+      <h2 class="rv">IR sensor: <em>invisible light radar</em></h2>
+      <p class="lead rv">An <b>infrared LED</b> sends out invisible light. A <b>photodiode</b> next to it watches for a reflection. If something bounces the light back, the output flips.</p>
+      <ul class="pts rv">
+        <li>Most modules output <b>LOW when an object is detected</b>, and an onboard LED lights up.</li>
+        <li>Light-coloured surfaces reflect IR. <b>Black surfaces absorb it</b>, which is how line-following robots see the track.</li>
+        <li>Sunlight also contains IR, so it can confuse the sensor outdoors.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="irSvg" viewBox="0 0 560 300"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Object distance</label><input type="range" id="irD" min="2" max="30" value="10"></div></div>
+      <div class="btns"><button class="btn sm" id="irW">⬜ White surface</button><button class="btn sm ghost" id="irB">⬛ Black surface</button></div>
+      <div class="read"><span id="irOut"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 ARDUINO -->
+<section class="slide c-b" data-group="Brains" data-title="Arduino Uno" data-demo="arduino">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧠 Brain 1</span>
+      <h2 class="rv">Arduino Uno: <em>the friendly starter</em></h2>
+      <p class="lead rv">A microcontroller (ATmega328P) on a board with USB, power and labelled pin headers. Write C/C++ in the Arduino IDE, press upload, done.</p>
+      <div class="chips rv"><span class="chip">16 MHz</span><span class="chip">5 V logic</span><span class="chip">14 digital pins (6 PWM)</span><span class="chip">6 analog inputs</span><span class="chip">32 KB flash</span><span class="chip">2 KB RAM</span></div>
+      <ul class="pts rv">
+        <li>Great for learning: huge community, thousands of tutorials and libraries.</li>
+        <li>No built-in Wi-Fi or Bluetooth. Add a module, or pick an ESP32.</li>
+      </ul>
+      <pre class="code rv"><span class="k">void</span> <span class="f">setup</span>() { <span class="f">pinMode</span>(<span class="n">13</span>, OUTPUT); }
+<span class="k">void</span> <span class="f">loop</span>()  { <span class="f">digitalWrite</span>(<span class="n">13</span>, HIGH); <span class="f">delay</span>(<span class="n">500</span>);
+        <span class="f">digitalWrite</span>(<span class="n">13</span>, LOW);  <span class="f">delay</span>(<span class="n">500</span>); }</pre>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="ardSvg" viewBox="0 0 560 330"></svg>
+      <div class="info" id="ardInfo">Hover or tap the pins to learn what they do. The little "L" LED is blinking from the code on the left.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 ESP32 -->
+<section class="slide c-v" data-group="Brains" data-title="ESP32" data-demo="esp">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">🧠 Brain 2</span>
+      <h2 class="rv">ESP32: <em>Wi-Fi and Bluetooth built in</em></h2>
+      <p class="lead rv">A faster, cheaper chip that <b>connects to the internet</b> by itself. Send sensor data to your phone, host a web page, build IoT gadgets.</p>
+      <div class="chips rv"><span class="chip">240 MHz dual-core</span><span class="chip">Wi-Fi + Bluetooth LE</span><span class="chip">3.3 V logic</span><span class="chip">12-bit ADC</span><span class="chip">~30 GPIO</span><span class="chip">touch pins</span></div>
+      <table class="cmp rv"><tr><th></th><th>Arduino Uno</th><th>ESP32</th></tr>
+        <tr><td>Speed</td><td>16 MHz</td><td>240 MHz</td></tr>
+        <tr><td>Wireless</td><td>None</td><td>Wi-Fi + BLE</td></tr>
+        <tr><td>Logic level</td><td>5 V</td><td>3.3 V (not 5 V safe!)</td></tr>
+        <tr><td>ADC</td><td>10-bit (0–1023)</td><td>12-bit (0–4095)</td></tr>
+        <tr><td>Best for</td><td>Learning</td><td>IoT projects</td></tr></table>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="espSvg" viewBox="0 0 560 330"></svg>
+      <div class="info" id="espInfo">Hover or tap the chip and pins. Watch the radio waves leaving the antenna.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 OTHER BRAINS -->
+<section class="slide c-p" data-group="Brains" data-title="Other brains" data-demo="none">
+  <div class="wrap one">
+    <div class="copy">
+      <span class="tag rv">🧠 Brain 3</span>
+      <h2 class="rv">More brains to <em>explore</em></h2>
+      <p class="lead rv">Hover (or tap) a card to flip it. A microcontroller runs one program forever. A microprocessor board like the Raspberry Pi runs a full operating system.</p>
+      <div class="cards">
+        <div class="fc pop" style="--d:.05s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="15" y="8" width="60" height="44" rx="6" fill="#0a8a4a"/><rect x="34" y="20" width="22" height="20" rx="3" fill="#222"/><rect x="38" y="2" width="14" height="8" fill="#ccc"/></svg><h4>Raspberry Pi Pico</h4><small>RP2040 microcontroller</small></div><div class="bk">Dual-core 133 MHz. Programs in <b>MicroPython</b> or C. Cheap and powerful.<br><br><b>Best for:</b> learning Python on hardware.</div></div></div>
+        <div class="fc pop" style="--d:.12s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="6" y="6" width="78" height="48" rx="6" fill="#c51a4a"/><rect x="14" y="14" width="22" height="22" rx="3" fill="#ccc"/><rect x="42" y="14" width="14" height="14" fill="#333"/><rect x="62" y="14" width="14" height="30" fill="#aaa"/></svg><h4>Raspberry Pi</h4><small>Tiny Linux computer</small></div><div class="bk">A full computer with HDMI, USB, Wi-Fi and a camera port. Runs Linux.<br><br><b>Best for:</b> vision, AI, servers, media centres.</div></div></div>
+        <div class="fc pop" style="--d:.19s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="10" y="6" width="70" height="48" rx="8" fill="#222"/><g fill="#FF006E"><rect x="28" y="14" width="5" height="5"/><rect x="38" y="14" width="5" height="5"/><rect x="48" y="14" width="5" height="5"/><rect x="58" y="14" width="5" height="5"/><rect x="38" y="24" width="5" height="5"/><rect x="48" y="24" width="5" height="5"/></g><circle cx="22" cy="38" r="5" fill="#ccc"/><circle cx="68" cy="38" r="5" fill="#ccc"/></svg><h4>micro:bit</h4><small>Built for beginners</small></div><div class="bk">25 LEDs, 2 buttons, motion sensor and radio on board. Block coding or Python.<br><br><b>Best for:</b> first-time makers.</div></div></div>
+        <div class="fc pop" style="--d:.26s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="20" y="10" width="50" height="40" rx="5" fill="#1b6bc9"/><rect x="36" y="22" width="18" height="16" rx="2" fill="#222"/><rect x="20" y="6" width="50" height="4" fill="#ccc"/></svg><h4>Arduino Nano</h4><small>Uno, but tiny</small></div><div class="bk">Same ATmega328P brain as the Uno, in a breadboard-friendly size.<br><br><b>Best for:</b> compact permanent projects.</div></div></div>
+        <div class="fc pop" style="--d:.33s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="16" y="10" width="58" height="40" rx="4" fill="#1a3dbf"/><rect x="36" y="20" width="18" height="18" fill="#222"/><g fill="#FFBE0B"><rect x="20" y="12" width="2" height="4"/><rect x="26" y="12" width="2" height="4"/><rect x="32" y="12" width="2" height="4"/><rect x="38" y="12" width="2" height="4"/></g></svg><h4>STM32</h4><small>"Blue Pill" ARM chip</small></div><div class="bk">32-bit ARM Cortex-M chips used in real products: drones, cars, appliances.<br><br><b>Best for:</b> serious embedded work.</div></div></div>
+        <div class="fc pop" style="--d:.4s"><div class="in"><div class="f"><svg viewBox="0 0 90 60"><rect x="16" y="6" width="58" height="48" rx="4" fill="#222"/><rect x="24" y="10" width="30" height="20" fill="#bbb"/><path d="M58 14q10 6 0 14M62 10q16 10 0 22" stroke="#3A86FF" stroke-width="2" fill="none"/></svg><h4>NodeMCU / ESP8266</h4><small>Cheap Wi-Fi board</small></div><div class="bk">The older sibling of the ESP32: Wi-Fi only, very cheap, great for simple IoT.<br><br><b>Best for:</b> budget smart-home gadgets.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 SERVO -->
+<section class="slide c-o" data-group="Actuators" data-title="Servo motor" data-demo="servo">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">💪 Actuator 1 of 2</span>
+      <h2 class="rv">Servo motor: <em>goes exactly where you say</em></h2>
+      <p class="lead rv">Inside: a small motor, gears, a position-sensing potentiometer and a control circuit. You send a pulse, and it turns to that angle and holds it.</p>
+      <ul class="pts rv">
+        <li>A pulse is sent every <b>20 ms</b>. Its width sets the angle: <b>1 ms = 0°, 1.5 ms = 90°, 2 ms = 180°</b>.</li>
+        <li>3 wires: <span style="color:#c98a5a">brown = GND</span>, <span style="color:#ff6b6b">red = 5 V</span>, <span style="color:#ffb347">orange = signal</span>.</li>
+        <li>Used in robot arms, door latches, camera gimbals and RC steering.</li>
+      </ul>
+      <pre class="code rv"><span class="f">servo</span>.<span class="f">attach</span>(<span class="n">9</span>);
+<span class="f">servo</span>.<span class="f">write</span>(<span class="n">90</span>);   <span class="c">// go to 90°</span></pre>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="srvSvg" viewBox="0 0 520 330"></svg>
+      <div class="ctrls"><div class="ctrl"><label>Angle</label><input type="range" id="srvA" min="0" max="180" value="90"></div></div>
+      <div class="btns"><button class="btn sm" id="srvSweep">↔ Sweep</button></div>
+      <div class="read"><span>Angle = <b id="srvAv"></b></span><span>Pulse = <b id="srvP"></b></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 DC MOTOR -->
+<section class="slide c-p" data-group="Actuators" data-title="DC motor" data-demo="dcm">
+  <div class="wrap">
+    <div class="copy">
+      <span class="tag rv">💪 Actuator 2 of 2</span>
+      <h2 class="rv">DC motor: <em>spins, spins, spins</em></h2>
+      <p class="lead rv">Apply voltage and it spins. Speed follows the average voltage. Reverse the polarity and it spins the other way.</p>
+      <ul class="pts rv">
+        <li><b>PWM</b> (analogWrite) switches power on and off very fast. A longer ON time means a higher average voltage and a faster motor.</li>
+        <li><b>Direction:</b> an H-bridge driver (L298N, L293D) swaps the polarity for you.</li>
+        <li>⚠ A pin can supply only ~20 mA and a motor wants far more, so <b>never drive a motor straight from a pin</b>. Use a driver or transistor, plus a flyback diode.</li>
+      </ul>
+    </div>
+    <div class="stage rv" style="--d:.15s">
+      <svg id="dcSvg" viewBox="0 0 520 330"></svg>
+      <div class="ctrls"><div class="ctrl"><label>PWM duty cycle</label><input type="range" id="dcD" min="0" max="100" value="50"></div></div>
+      <div class="btns"><button class="btn sm" id="dcDir">🔄 Reverse direction</button></div>
+      <div class="read"><span>analogWrite = <b id="dcW"></b></span><span>Speed = <b id="dcR"></b></span><span id="dcDirL"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 RECAP -->
+<section class="slide c-v" data-group="Wrap up" data-title="Put it all together" data-demo="recap">
+  <div class="wrap one">
+    <div class="copy">
+      <span class="tag rv">Wrap up</span>
+      <h2 class="rv">Put it all <em>together</em></h2>
+      <p class="lead rv">Pick a project. Watch the signal travel: <b>sense → think → act</b>.</p>
+      <div class="tabs rv" id="rcTabs"></div>
+      <div class="flowline rv">
+        <div class="node" id="rcN0" style="--rc:var(--b)"><div class="em" id="rcE0"></div><b id="rcT0"></b><small id="rcS0"></small></div>
+        <div class="arr" id="rcA0">➜</div>
+        <div class="node" id="rcN1" style="--rc:var(--v)"><div class="em" id="rcE1"></div><b id="rcT1"></b><small id="rcS1"></small></div>
+        <div class="arr" id="rcA1">➜</div>
+        <div class="node" id="rcN2" style="--rc:var(--p)"><div class="em" id="rcE2"></div><b id="rcT2"></b><small id="rcS2"></small></div>
+      </div>
+      <div class="info rv" id="rcInfo"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 QUIZ CTA -->
+<section class="slide c-p title" data-group="Quiz" data-title="Quiz time" data-demo="none">
+  <svg class="traces" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice">
+    <path class="sy" d="M0 160 H300 L360 220 H700 L760 160 H1200"/><path class="sb" d="M0 520 H400 L460 460 H800 L860 520 H1200" style="animation-duration:3s"/>
+  </svg>
+  <div class="wrap one">
+    <div class="copy" style="align-items:center">
+      <h1 class="rv"><span>Think you got it?</span><em>Quiz</em> <em>time!</em></h1>
+      <p class="lead rv" style="--d:.15s"><b>15 questions</b>: 8 easy ones, 2 trickier ones, and 5 real-life problems from Indian homes and hostels. Which sensor would solve them?</p>
+      <div class="row rv" style="--d:.3s"><a class="btn" href="quiz.html">Start the quiz →</a><button class="btn ghost" data-restart>↺ Back to slide 1</button></div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<div class="menu" id="menu"><div id="menuBody"></div></div>
+<footer class="bar">
+  <button class="nb" id="prev" title="Previous (←)">←</button>
+  <div class="prog"><i id="prog"></i></div>
+  <button class="nb" id="next" title="Next (→)">→</button>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

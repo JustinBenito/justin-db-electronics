@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Spark! Electronics Quiz</title>
+<meta name="description" content="A 15-question electronics quiz: sensors, brains, actuators and real-life problem solving.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+<div class="bg"><i></i><i></i><i></i><i></i><i></i></div>
+<canvas id="confetti"></canvas>
+<header class="qtop">
+  <a class="brand" href="index.html" title="Back to slides"><b>⚡</b><span>Spark!</span></a>
+  <div class="qcount" id="qcount"></div>
+</header>
+<div class="qprog"><i id="qprog"></i></div>
+
+<main id="qmain" class="c-p">
+  <!-- intro -->
+  <section class="qs on" id="sIntro">
+    <div class="qbox center">
+      <div class="orbs"><i style="--c:var(--y)"></i><i style="--c:var(--o)"></i><i style="--c:var(--p)"></i><i style="--c:var(--v)"></i><i style="--c:var(--b)"></i></div>
+      <h1>The <em>Spark!</em> Quiz</h1>
+      <p class="lead">15 questions. 8 easy, 2 trickier, and 5 real-life problems from Indian homes and hostels where you pick the sensor that solves it.</p>
+      <ul class="legend"><li><b>Part 1</b> Basics (8)</li><li><b>Part 2</b> Level up (2)</li><li><b>Part 3</b> Real world (5)</li></ul>
+      <button class="btn" id="startBtn">Start <span class="kbd">Enter ↵</span></button>
+      <p class="hint">Tip: press A, B, C or D to answer.</p>
+    </div>
+  </section>
+  <!-- question -->
+  <section class="qs" id="sQ">
+    <div class="qbox">
+      <div class="qmeta"><span class="qnum" id="qnum"></span><span class="qpart" id="qpart"></span></div>
+      <div class="scenario" id="qscene" hidden></div>
+      <h2 id="qtext"></h2>
+      <div class="opts" id="qopts"></div>
+      <div class="fb" id="qfb" hidden><div class="fbh" id="qfbh"></div><p id="qfbp"></p><button class="btn" id="nextBtn">Next <span class="kbd">Enter ↵</span></button></div>
+    </div>
+  </section>
+  <!-- result -->
+  <section class="qs" id="sRes">
+    <div class="qbox center">
+      <div class="ring"><svg viewBox="0 0 140 140"><defs><linearGradient id="rg" x1="0" x2="1"><stop offset="0" stop-color="#FFBE0B"/><stop offset=".5" stop-color="#FF006E"/><stop offset="1" stop-color="#3A86FF"/></linearGradient></defs><circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,.14)" stroke-width="14"/><circle id="ringC" cx="70" cy="70" r="60" fill="none" stroke="url(#rg)" stroke-width="14" stroke-linecap="round" stroke-dasharray="377" stroke-dashoffset="377" transform="rotate(-90 70 70)"/></svg><div class="ringt"><b id="rScore">0</b><span>/ 15</span></div></div>
+      <h2 id="rTitle"></h2><p class="lead" id="rMsg"></p>
+      <div class="row"><button class="btn" id="retryBtn">↺ Try again</button></div>
+    </div>
+  </section>
+</main>
+<script src="quiz.js"></script>
+</body>
+</html>
